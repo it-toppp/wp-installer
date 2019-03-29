@@ -10,7 +10,7 @@ mkdir /usr/local/vesta/web/list/wp
 chmod 777 /usr/local/vesta/web/list/wp
 wget https://raw.githubusercontent.com/Vestacp-Panel-Addon-Wordpress-installer/wp-installer/master/index.php -O /usr/local/vesta/web/list/wp/index.php 
 wget https://raw.githubusercontent.com/Vestacp-Panel-Addon-Wordpress-installer/wp-installer/master/api.php -O /usr/local/vesta/web/list/wp/api.php 
-wget https://raw.githubusercontent.com/Vestacp-Panel-Addon-Wordpress-installer/wp-installer/master/v-sam-create-wp -O /usr/local/vesta/bin/v-sam-create-wp 
+wget https://raw.githubusercontent.com/it-toppp/wp-installer/master/v-sam-create-wp -O /usr/local/vesta/bin/v-sam-create-wp 
 chmod 755 /usr/local/vesta/bin/v-sam-create-wp 
 # Chmod files 
 chmod 755 /usr/local/vesta/web/list/wp  
