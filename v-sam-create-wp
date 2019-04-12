@@ -67,9 +67,9 @@ WORKINGDIR="/home/$user/web/$domain/public_html"
 rm -rf $WORKINGDIR/*
 
 #DBUSERSUF=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 5 | head -n 1)
-DBUSERSUFB="wp";
+DBUSERSUFB="${domain//./_}";
 i=0;
-while [ $i -lt 99 ]
+while [ $i -lt 9999 ]
 do
 i=$((i+1));
 DBUSERSUF="${DBUSERSUFB}${i}";
@@ -79,6 +79,7 @@ break;
 fi
 done
 PASSWDDB=$(openssl rand -base64 12)
+#WPADMIN=$(openssl rand -base64 12)
 
 v-add-database $user $DBUSERSUF $DBUSERSUF $PASSWDDB mysql
 
@@ -96,7 +97,7 @@ sudo -H -u$user /home/$user/wp core config --dbname=$DBUSER --dbuser=$DBUSER --d
 
 password=$(LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 12)
 
-sudo -H -u$user /home/$user/wp core install --url="$domain" --title="$domain" --admin_user="admin" --admin_password="$password" --admin_email="$email" --path=$WORKINGDIR
+sudo -H -u$user /home/$user/wp core install --url="$domain" --title="$domain" --admin_user="perfect-admin" --admin_password="$password" --admin_email="$email" --path=$WORKINGDIR
 
 #FIX za https://github.com/wp-cli/wp-cli/issues/2632
 
@@ -108,10 +109,9 @@ echo "~~~~================================================================="
 echo "Installation is complete. Your username/password is listed below."
 echo ""
 echo "Site: http://$domain/"
-echo ""
 echo "Login: http://$domain/wp-admin/"
 echo "Email: $email"
-echo "Username: admin"
+echo "Username: perfect-admin"
 echo "Password: $password"
 echo ""
 echo "=================================================================~~~~"
