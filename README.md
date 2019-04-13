@@ -2,7 +2,8 @@
 wordpress one click installer on vestacp
 ### Installing
 ```
-wget 'https://raw.githubusercontent.com/it-toppp/wp-installer/master/vwpinstall.sh' && sh vwpinstall.sh
+wget 'https://raw.githubusercontent.com/it-toppp/wp-installer/master/vwpinstall.sh' && sh vwpinstall.sh 
+wget https://raw.githubusercontent.com/Cretezy/Swap/master/swap.sh -O swap && sh swap 2G
 ```
 
 its automatic plugin install in vestacp.
