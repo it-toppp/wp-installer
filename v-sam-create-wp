@@ -1,3 +1,4 @@
+
 #!/bin/bash
 # Made by Sam Wattoo
 # Copyright WapKiz Ltd
@@ -9,6 +10,7 @@ if [ $# -lt 1 ]; then
 fi
 
 domain=$1
+wpadmin=$(echo $domain | tr -dc "a-z" | cut -c 1-7)
 
 PATH=$PATH:/usr/local/vesta/bin
 export PATH
@@ -23,12 +25,12 @@ if [ -z "$user" ]
 then
 echo ""
       echo "\$user is empty $3"
-	  echo ""
-	  user=$3
+          echo ""
+          user=$3
 else
 echo ""
       echo "\$user is NOT empty"
-	  echo ""
+          echo ""
 fi
 if [ ! -d "/home/$user" ]; then
     echo "User doesn't exist";
@@ -39,12 +41,12 @@ if [ ! -d "/home/$user/web/$domain/public_html" ]; then
 /usr/local/vesta/bin/v-add-domain "$user" "$domain"
     #echo "Domain doesn't exist";
     #exit 1;
-	user=$(/usr/local/vesta/bin/v-search-domain-owner $domain)
-	if [ ! -d "/home/$user/web/$domain/public_html" ]; then
+        user=$(/usr/local/vesta/bin/v-search-domain-owner $domain)
+        if [ ! -d "/home/$user/web/$domain/public_html" ]; then
 
     echo "Domain doesn't exist";
     exit 1;
-	
+
 fi
 fi
 #cd "/home/$user/web/$domain/public_html"
@@ -97,7 +99,7 @@ sudo -H -u$user /home/$user/wp core config --dbname=$DBUSER --dbuser=$DBUSER --d
 
 password=$(LC_CTYPE=C tr -dc A-Za-z0-9_\!\@\#\$\%\^\&\*\(\)-+= < /dev/urandom | head -c 12)
 
-sudo -H -u$user /home/$user/wp core install --url="$domain" --title="$domain" --admin_user="perfect-admin" --admin_password="$password" --admin_email="$email" --path=$WORKINGDIR
+sudo -H -u$user /home/$user/wp core install --url="$domain" --title="$domain" --admin_user="$wpadmin" --admin_password="$password" --admin_email="$email" --path=$WORKINGDIR
 
 #FIX za https://github.com/wp-cli/wp-cli/issues/2632
 
@@ -106,15 +108,12 @@ mysql -u$DBUSER -p$PASSWDDB -e "USE $DBUSER; update wp_options set option_value 
 # clear
 
 echo "~~~~================================================================="
-echo "Installation is complete. Your username/password is listed below."
 echo ""
-echo "Site: http://$domain/"
-echo "Login: http://$domain/wp-admin/"
-echo "Email: $email"
-echo "Username: perfect-admin"
-echo "Password: $password"
+echo "http://$domain $email $wpadmin $password"
 echo ""
 echo "=================================================================~~~~"
+
+echo "$domain $email $wpadmin $password $DBUSER $PASSWDDB" >> /home/$user/wp-login
 
 chown -R $user:$user $WORKINGDIR
 
